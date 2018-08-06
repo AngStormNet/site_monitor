@@ -4,7 +4,7 @@ A slack bot
 Do a GET on each given URL and post a slack message when an error occurs.
 """
 import requests, time
-from settings import HTTP_OK, INITIAL_DELAY, URLS, WEBHOOK
+from settings import BACKOFF, HTTP_OK, INITIAL_DELAY, URLS, WEBHOOK
 
 
 def slack_message(msg):
@@ -45,7 +45,7 @@ if __name__ == '__main__':
                 if get_success:
                     get_success = False
                     # Increase the sleep time after an error is found.
-                    delay = delay * 2
+                    delay = delay * BACKOFF
         # If all urls were successful, reset the delay back to initial value.
         if get_success:
             delay = INITIAL_DELAY
